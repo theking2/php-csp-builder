@@ -12,7 +12,7 @@ Simple Content-Security-Policy builder. Enums protect for typos, but are current
 Most function return this that allows for chaining.
 
 ## addCspPolicies
-Deprecated use one of the other instead. Adds an array of policies to a directive, well overwrite existing policies. 
+Deprecated, use one of the other add functions instead. Adds an array of policies to a directive, well overwrite existing policies. 
 
 ## addCspPolicy
 Adds one policy to the list for a directive
@@ -30,7 +30,7 @@ Return the current nonce as string
 Return a complete Content-Security-Policy string
 
 ## setCspHeader
-Adds a the Content-Security-Policy to the header; call this before writing content, side-effect!
+Adds the Content-Security-Policy to the header; call this before writing content, side-effect!
 
 # Example usage:
 ```php

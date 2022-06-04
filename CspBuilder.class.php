@@ -39,9 +39,9 @@ class CspBuilder
       CspSource::UnsafeInline => "'unsafe-inline'",
       CspSource::UnsafeEval => "'unsafe-eval'",
       CspSource::Data => "data:",
-      CspSource::Blob => "'blob:'",
-      CspSource::Media => "'media:'",
-      CspSource::Frame => "'frame:'"
+      CspSource::Blob => "blob:",
+      CspSource::Media => "media:",
+      CspSource::Frame => "frame:"
     };
   }
   

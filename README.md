@@ -46,8 +46,18 @@ $Csp = (new CspBuilder())
 	->addCspPolicy('script-src', "http://code.highcharts.com")
 	->addCspPolicy('script-src', "http://code.jquery.com")
 ;
+
 /* set the header */
 $Csp->setCspHeader();
+
 /* save the nonce for use as script attributes */
 $nonce = $Csp->getNonce();
+```
+
+Use this for inline scripts as 
+```js
+<script nonce="<?=$nonce?>">
+"use strict;
+//some inline code
+</script>
 ```

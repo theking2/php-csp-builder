@@ -92,11 +92,13 @@ class CspBuilder
    * setCspHeader
    * Side effect set the header in the current request
    *
-   * @return void
+   * @return CspBuilder
    */
-  public function setCspHeader(): void
+  public function setCspHeader(): CspBuilder
   {
     header('Content-Security-Policy: ' . $this->getCspHeader());
+    
+    return $this;
   }
 
 }

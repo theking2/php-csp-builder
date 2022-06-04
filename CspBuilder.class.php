@@ -8,7 +8,7 @@ enum  CspDirective {
   case Style;
 }
 enum CspSource {
-  case _Self;
+  case Self;
   case UnsafeInline;
   case UnsafeEval;
   case Data;
@@ -34,32 +34,37 @@ class CspBuilder
    * @return string
    */
   private static function CspSourceString(CspSource $source) {
-    switch($source) {
-      case CspSource::_Self: return "'self'";
-      case CspSource::UnsafeInline: return "'unsafe-inline'";
-      case CspSource::UnsafeEval: return "'unsafe-eval'";
-      case CspSource::Data: return "data:";
-      case CspSource::Blob: return "'blob:'";
-      case CspSource::Media: return "'media:'";
-      case CspSource::Frame: return "'frame:'";
-      default: throw new \OutOfBoundsException("Unkown CSP Source $source");
-    }
+    return match($source) {
+      CspSource::Self => "'self'",
+      CspSource::UnsafeInline => "'unsafe-inline'",
+      CspSource::UnsafeEval => "'unsafe-eval'",
+      CspSource::Data => "data:",
+      CspSource::Blob => "'blob:'",
+      CspSource::Media => "'media:'",
+      CspSource::Frame => "'frame:'"
+    };
   }
-
+  
+  /**
+   * Turn a CspDirective in a string
+   *
+   * @param  CspDirective $directive
+   * @return string
+   */
   private static function CspDirectiveString(CspDirective $directive) {
-    switch ($directive) {
-      
-      case CspDirective::Default: return "default-src";
-      case CspDirective::Image: return "img-src";
-      case CspDirective::Font: return "font-src";
-      case CspDirective::Script: return "script-src";
-      case CspDirective::Style: return "style-src";
-      default: throw new \OutOfBoundsException("Unkown CSP Directive $directive");
-    }
+    return match($directive) {
+      CspDirective::Default => "default-src",
+      CspDirective::Image => "img-src",
+      CspDirective::Font => "font-src",
+      CspDirective::Script => "script-src",
+      CspDirective::Style => "style-src",
+    };
   }
-
-
+  
+  /** string $nonce nonce is caculated at each construct
   private string $nonce;
+  
+  /** map of directives => array of strings sources
   private array $csp_options = [];
   
   public function __construct(?bool $defaultSelf=false)
@@ -71,7 +76,7 @@ class CspBuilder
     }
     if( $defaultSelf )
       $this->csp_options = [
-        self::CspDirectiveString(CspDirective::Default) => [self::CspSourceString(CspSource::_Self)]
+        self::CspDirectiveString(CspDirective::Default) => [self::CspSourceString(CspSource::Self)]
       ];
     else
   	  $this->csp_options = [];

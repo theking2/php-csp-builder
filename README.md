@@ -29,28 +29,26 @@ Adds a the Content-Security-Policy to the header
 
 # Example usage:
 ```php
-$Csp = (new CspBuilder())
-	->addCspPolicies('default-src', [CspBuilder::SELF])
+$Csp = (new CspBuilder(true))
 
-	->addCspPolicy('style-src', CspBuilder::SELF)
-	->addCspPolicy('style-src', CspBuilder::UNSAFE_INLINE)
-	->addCspPolicy('style-src', "http://fonts.googleapis.com")
+	->addCspPolicy(CspDirective::Style, CspSource::_Self)
+	->addCspPolicy(CspDirective::Style, CspSource::UnsafeInline)
+	->addCspPolicyUrl(CspDirective::Style, "http://fonts.googleapis.com")
 
-	->addCspPolicy('img-src', CspBuilder::SELF)
-	->addCspPolicy('img-src', CspBuilder::DATA)
+	->addCspPolicy(CspDirective::Image, CspSource::_Self)
+	->addCspPolicy(CspDirective::Image, CspSource::Data)
 
-	->addCspPolicy('font-src', "http://fonts.gstatic.com")
+	->addCspPolicyUrl(CspDirective::Font, "http://fonts.gstatic.com")
 
-	->addCspPolicyNonce('script-src')
-	->addCspPolicy('script-src', CspBuilder::SELF)
-	->addCspPolicy('script-src', "http://code.highcharts.com")
-	->addCspPolicy('script-src', "http://code.jquery.com")
-;
+	->addCspPolicyNonce(CspDirective::Script)
+	->addCspPolicy(CspDirective::Script, CspSource::_Self)
+	->addCspPolicyUrl(CspDirective::Script, "http://code.highcharts.com")
+	->addCspPolicyUrl(CspDirective::Script, "http://code.jquery.com")
+	
+	// set the http header
+	->setCspHeader();
 
-/* set the header */
-$Csp->setCspHeader();
-
-/* save the nonce for use as script attributes */
+// save the nonce
 $nonce = $Csp->getNonce();
 ```
 

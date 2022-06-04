@@ -2,8 +2,8 @@
 Simple Content-Security-Policy builder. Enums protect for typos, but are currently incomplete
 
 # Interface
- * `public function addCspPolicies(CspDirective $directive, array $values): CspBuilder`
- * `public function addCspPolicy(CspDIrective $directive, CspSource $value): CspBuilder`
+ * `public function addCspPolicy(CspDIrective $directive, CspSource $source): CspBuilder`
+ * `public function addCspPolicyUrl(CspDIrective $directive, string $source): CspBuilder`
  * `public function addCspPolicyNonce(CspDirective $directive) : CspBuilder`
  * `public function getNonce(): string`
  * `public function getCspHeader(): string`

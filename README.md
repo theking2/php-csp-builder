@@ -1,22 +1,27 @@
 # php-csp-builder
-Simple Content-Security-Policy builder
+Simple Content-Security-Policy builder. Enums protect for typos, but are currently incomplete
 
 # Interface
- * `public function addCspPolicies(string $resource, array $values): CspBuilder`
- * `public function addCspPolicy(string $resource, string $value): CspBuilder`
- * `public function addCspPolicyNonce(string $resource) : CspBuilder`
+ * `public function addCspPolicies(CspDirective $directive, array $values): CspBuilder`
+ * `public function addCspPolicy(CspDIrective $directive, CspSource $value): CspBuilder`
+ * `public function addCspPolicyNonce(CspDirective $directive) : CspBuilder`
  * `public function getNonce(): string`
  * `public function getCspHeader(): string`
  * `public function setCspHeader(): void`
 
+Most function return this that allows for chaining.
+
 ## addCspPolicies
-Adds an array of policies to a resource, well overwrite existing policies
+Deprecated use one of the other instead. Adds an array of policies to a directive, well overwrite existing policies. 
 
 ## addCspPolicy
-Adds one policy to the list for a resource
+Adds one policy to the list for a directive
+
+## addCspPolicyUrl
+Adds a URL to the list for a directive
 
 ## addCspPolicyNonce
-Adds the nonce to a resource. The nonce is calculated at constuction
+Adds the nonce to a directive. The nonce is calculated at constuction
 
 ## getNonce
 Return the current nonce as string
@@ -25,7 +30,7 @@ Return the current nonce as string
 Return a complete Content-Security-Policy string
 
 ## setCspHeader
-Adds a the Content-Security-Policy to the header
+Adds a the Content-Security-Policy to the header; call this before writing content, side-effect!
 
 # Example usage:
 ```php

@@ -1,5 +1,5 @@
-# php-csp-builder
-Simple Content-Security-Policy builder. Enums protect for typos, but are currently incomplete
+# PHP CspBuilder
+Simple Content-Security-Policy builder in PHP. Enums protect for typos, but are currently incomplete
 
 # Interface
  * `public function addCspPolicy(CspDIrective $directive, CspSource $source): CspBuilder`
@@ -9,7 +9,7 @@ Simple Content-Security-Policy builder. Enums protect for typos, but are current
  * `public function getCspHeader(): string`
  * `public function setCspHeader(): void`
 
-Most function return this that allows for chaining.
+Most function return $this therefore allowing for chaining.
 
 ## addCspPolicies
 Deprecated, use one of the other add functions instead. Adds an array of policies to a directive, well overwrite existing policies. 

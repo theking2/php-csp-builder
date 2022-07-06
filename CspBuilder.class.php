@@ -74,12 +74,13 @@ class CspBuilder
     if( !$strong ) {
       error_log("weak random for nonce");
     }
-    if( $defaultSelf )
-      $this->csp_options = [
-        self::CspDirectiveString(CspDirective::Default) => [self::CspSourceString(CspSource::Self)]
-      ];
-    else
-  	  $this->csp_options = [];
+    if( $defaultSelf ) {
+      foreach(CspDirective::cases() as $directive ) {
+        $this-> addCspPolicy( $directive, CspSource::Self );
+     }
+     
+    } else
+      $this->csp_options = [];
   }  
   /**
    * Add a complete source list to the CSP

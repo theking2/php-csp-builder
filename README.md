@@ -36,17 +36,14 @@ Adds the Content-Security-Policy to the header; call this before writing content
 ```php
 $Csp = (new CspBuilder(true))
 
-	->addCspPolicy(CspDirective::Style, CspSource::Self)
 	->addCspPolicy(CspDirective::Style, CspSource::UnsafeInline)
 	->addCspPolicyUrl(CspDirective::Style, "http://fonts.googleapis.com")
 
-	->addCspPolicy(CspDirective::Image, CspSource::Self)
 	->addCspPolicy(CspDirective::Image, CspSource::Data)
 
 	->addCspPolicyUrl(CspDirective::Font, "http://fonts.gstatic.com")
 
 	->addCspPolicyNonce(CspDirective::Script)
-	->addCspPolicy(CspDirective::Script, CspSource::Self)
 	->addCspPolicyUrl(CspDirective::Script, "http://code.highcharts.com")
 	->addCspPolicyUrl(CspDirective::Script, "http://code.jquery.com")
 	

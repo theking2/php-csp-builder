@@ -20,10 +20,13 @@ enum CspSource: String {
  * CspBuilder
  * Build a Content Security Policy (CSP) header
  * Example:
- * $Csp = new CspBuilder();
- * $Csp->addCspPolicies('default-src', [CspBuilder::SELF]);
- *  ->addCspPolicy('script-src', CspBuilder::SELF);
- *  ->addCspPolicyNonce('script-src');
+ * $Csp = (new CspBuilder())
+ * 
+ *  ->add(CspDirective::Default', CspSource::Self)
+ *  ->add(CspDirective::Script, CspSource::Self)
+ *  ->addNonce(CspSource::Script);
+ * 
+ * header('Content-Security-Policy: ' . $Csp);
  */
 class CspBuilder
 {  
@@ -47,7 +50,7 @@ class CspBuilder
   }  
   /**
    * Add a complete source list to the CSP
-   *
+   * @deprecated use the other add functions
    * @param  CspDirective $directive
    * @param  array $sources Array of string sources
    * @return CspBuilder for chaining
@@ -57,6 +60,11 @@ class CspBuilder
     $this->csp_options[ $directive-> value ] = $sources;
     return $this;
   }  
+  /** @depricated use add instead. */
+  public function addCspPolicy(): CspBuilder
+  {
+    return call_user_func_array([$this, 'add'], func_get_args());
+  }
   /**
    * Add a single source to the CSP
    *
@@ -64,30 +72,43 @@ class CspBuilder
    * @param  CspSource $source
    * @return CspBuilder for chainning
    */
-  public function addCspPolicy(CspDirective $directive, CspSource $source): CspBuilder
+  public function add(CspDirective $directive, CspSource $source): CspBuilder
   {
     $this->csp_options[ $directive-> value ][] = $source-> value;
     return $this;
   }
-    /**
+
+  /** @depriecated use addUrl instead. */
+  public function addCspPolicyUrl(): CspBuilder
+  {
+    return call_user_func_array([$this, 'addUrl'], func_get_args());
+  }
+
+   /**
    * Add a single url to the CSP
    *
    * @param  CspDirective $directive
    * @param  CspSource $source
    * @return CspBuilder for chainning
    */
-  public function addCspPolicyUrl(CspDirective $directive, string $source): CspBuilder
+  public function addUrl(CspDirective $directive, string $source): CspBuilder
   {
     $this->csp_options[ $directive-> value ][] = $source;
     return $this;
   }  
+  /** @depricated use addNonce instead */
+  public function addCspPolicyNonce() : CspBuilder
+  {
+    return call_user_func_array([$this, 'addNonce'], func_get_args());
+  }
+
   /**
    * Add a nonce policy
    *
    * @param  CspDirective $directive
    * @return CspBuilder for chaining
    */
-  public function addCspPolicyNonce(CspDirective $directive) : CspBuilder
+  public function addNonce(CspDirective $directive) : CspBuilder
   {
     $this->csp_options[ $directive-> value ][] = "'nonce-$this->nonce'";
     return $this;
@@ -100,20 +121,30 @@ class CspBuilder
   {
     return $this->nonce;
   }    
+
+  /**
+   * @deprecated use cast to string instead
+   * @return string
+   */
+  public function getCspHeader(): string {
+    return call_user_func('__tostring', func_get_args());
+  }
+
   /**
    * create a complete policy
    *
    * @return string
    */
-  public function getCspHeader(): string
+  public function __toString(): string
   {
-    $result = '';
-    foreach ($this->csp_options as $directive => $sources) {
-      $result .= $directive . ' ' . implode(' ', $sources) . '; ';
-    
+    $csp = "";
+    foreach( $this->csp_options as $directive => $sources ) {
+      $csp .= "$directive " . implode(' ', $sources) . "; ";
     }
-    return $result;
-  }  
+    return $csp;
+  }
+ 
+ 
   /**
    * setCspHeader
    * Side effect set the header in the current request
@@ -122,7 +153,7 @@ class CspBuilder
    */
   public function setCspHeader(): CspBuilder
   {
-    header('Content-Security-Policy: ' . $this->getCspHeader());
+    header('Content-Security-Policy: ' . $this);
 
     return $this;
   }

@@ -123,7 +123,7 @@ class CspBuilder
   }    
 
   /**
-   * @depricated use cast to string instead
+   * @deprecated use cast to string instead
    * @return string
    */
   public function getCspHeader(): string {

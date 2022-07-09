@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-enum  CspDirective {
-  case Default;
-  case Image;
-  case Font;
-  case Script;
-  case Style;
+enum CspDirective: String {
+  case Default = "default-src";
+  case Image = "img-src";
+  case Font = "font-src";
+  case Script = "script-src";
+  case Style = "style-src";
 }
-enum CspSource {
-  case Self;
-  case UnsafeInline;
-  case UnsafeEval;
-  case Data;
-  case Blob;
-  case Media;
-  case Frame;
+enum CspSource: String {
+  case Self = "'self'";
+  case UnsafeInline = "'unsafe-inline'";
+  case UnsafeEval = "'unsafe-eval'";
+  case Data = "data:";
+  case Blob = "blob:";
+  case Media = "media:";
+  case Frame = "frame:";
 }
 /**
  * CspBuilder
@@ -27,44 +27,7 @@ enum CspSource {
  */
 class CspBuilder
 {  
-  /**
-   * Turn a CspSoruce in to a string
-   *
-   * @param  CspSource $source
-   * @return string
-   */
-  private static function CspSourceString(CspSource $source) {
-    return match($source) {
-      CspSource::Self => "'self'",
-      CspSource::UnsafeInline => "'unsafe-inline'",
-      CspSource::UnsafeEval => "'unsafe-eval'",
-      CspSource::Data => "data:",
-      CspSource::Blob => "blob:",
-      CspSource::Media => "media:",
-      CspSource::Frame => "frame:"
-    };
-  }
-  
-  /**
-   * Turn a CspDirective in a string
-   *
-   * @param  CspDirective $directive
-   * @return string
-   */
-  private static function CspDirectiveString(CspDirective $directive) {
-    return match($directive) {
-      CspDirective::Default => "default-src",
-      CspDirective::Image => "img-src",
-      CspDirective::Font => "font-src",
-      CspDirective::Script => "script-src",
-      CspDirective::Style => "style-src",
-    };
-  }
-  
-  /** string $nonce nonce is caculated at each construct
   private string $nonce;
-  
-  /** map of directives => array of strings sources
   private array $csp_options = [];
   
   public function __construct(?bool $defaultSelf=false)
@@ -75,12 +38,12 @@ class CspBuilder
       error_log("weak random for nonce");
     }
     if( $defaultSelf ) {
-      foreach(CspDirective::cases() as $directive ) {
-        $this-> addCspPolicy( $directive, CspSource::Self );
-     }
-     
-    } else
-      $this->csp_options = [];
+      foreach( CspDirective::cases() as $directive ) {
+        $this->csp_options[ $directive->value ][] = CspSource::Self-> value;
+      }
+    } else {
+  	  $this->csp_options = [];
+    }
   }  
   /**
    * Add a complete source list to the CSP
@@ -91,7 +54,7 @@ class CspBuilder
    */
   public function addCspPolicies(CspDirective $directive, array $sources): CspBuilder
   {
-    $this->csp_options[ self::CspDirectiveString($directive) ] = $sources;
+    $this->csp_options[ $directive-> value ] = $sources;
     return $this;
   }  
   /**
@@ -103,7 +66,7 @@ class CspBuilder
    */
   public function addCspPolicy(CspDirective $directive, CspSource $source): CspBuilder
   {
-    $this->csp_options[ self::CspDirectiveString($directive) ][] = self::CspSourceString($source);
+    $this->csp_options[ $directive-> value ][] = $source-> value;
     return $this;
   }
     /**
@@ -115,7 +78,7 @@ class CspBuilder
    */
   public function addCspPolicyUrl(CspDirective $directive, string $source): CspBuilder
   {
-    $this->csp_options[ self::CspDirectiveString($directive) ][] = $source;
+    $this->csp_options[ $directive-> value ][] = $source;
     return $this;
   }  
   /**
@@ -126,7 +89,7 @@ class CspBuilder
    */
   public function addCspPolicyNonce(CspDirective $directive) : CspBuilder
   {
-    $this->csp_options[ self::CspDirectiveString($directive) ][] = "'nonce-$this->nonce'";
+    $this->csp_options[ $directive-> value ][] = "'nonce-$this->nonce'";
     return $this;
   }
   /**
@@ -146,7 +109,7 @@ class CspBuilder
   {
     $result = '';
     foreach ($this->csp_options as $directive => $sources) {
-      $result .= $directive . implode(' ', $sources) . '; ';
+      $result .= $directive . ' ' . implode(' ', $sources) . '; ';
     
     }
     return $result;
@@ -160,7 +123,7 @@ class CspBuilder
   public function setCspHeader(): CspBuilder
   {
     header('Content-Security-Policy: ' . $this->getCspHeader());
-    
+
     return $this;
   }
 

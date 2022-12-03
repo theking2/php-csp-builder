@@ -1,5 +1,5 @@
 # PHP CspBuilder
-Simple Content-Security-Policy builder in PHP. Enums protect for typos, but are currently incomplete
+Ultimate Content-Security-Policy builder in PHP. The CspSource and CspDirective enum utilize the string backed enums to protect you project from typos. Garantued to work on all browsers. Add security to your PHP based site now.
 
 # Interface
  * `public function addCspPolicy(CspDIrective $directive, CspSource $source): CspBuilder`
@@ -14,7 +14,7 @@ Most function return $this therefore allowing for chaining.
 ## Sources
 The following source identifiers are included:
  * CspSource::Self - self
- * CspSource::UnsafeIline - unsafe-inline
+ * CspSource::UnsafeInine - unsafe-inline
  * CspSource::UnsafeEval - unsafe-eval
  * CspSource::Data - data:
  * CspSource::Blob - blob:
@@ -29,24 +29,23 @@ The following directives are defined
  * CspDirective::Script - srcipt-src
  * CspDirective::Style - style-src
  
-These can be shortened with for instance
+These can be of course be shortened with this
 ```
 use \CspDirective as CspD;
 use \CspSource as CspS;
 ```
 
-
 ## addCspPolicies
-Deprecated, use one of the other add functions instead. Adds an array of policies to a directive, well overwrite existing policies. 
+Deprecated, use one of the other add functions instead. Adds an array of policies to a directive, while overwrite existing policies. 
 
 ## addCspPolicy
-Adds one policy to the list for a directive
+Adds one policy to the list for a directive. Returns a CspBuilder so can be chained.
 
 ## addCspPolicyUrl
-Adds a URL to the list for a directive
+Adds a URL to the list for a directive. Returns a CspBuilder so can be chained.
 
 ## addCspPolicyNonce
-Adds the nonce to a directive. The nonce is calculated at constuction
+Adds the nonce to a directive. The nonce is calculated at constuction. Returns a CspBuilder so can be chained.
 
 ## getNonce
 Return the current nonce as string

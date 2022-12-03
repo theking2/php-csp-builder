@@ -15,21 +15,21 @@ Most function return $this therefore allow for chaining.
 
 ## Sources
 The following source identifiers are included:
- * CspSource::Self - self
- * CspSource::UnsafeInine - unsafe-inline
- * CspSource::UnsafeEval - unsafe-eval
- * CspSource::Data - data:
- * CspSource::Blob - blob:
- * CspSource::Media - media:
- * CspSource::Frame - frame:
+ * `CspSource::Self` - self
+ * `CspSource::UnsafeInine` - unsafe-inline
+ * `CspSource::UnsafeEval` - unsafe-eval
+ * `CspSource::Data` - data:
+ * `CspSource::Blob` - blob:
+ * `CspSource::Media` - media:
+ * `CspSource::Frame` - frame:
  
 ## Directives
 The following directives are defined
- * CspDirective::Default - default-src
- * CspDirective::Image - img-src
- * CspDirective::Font - font-src
- * CspDirective::Script - srcipt-src
- * CspDirective::Style - style-src
+ * `CspDirective::Default` - default-src
+ * `CspDirective::Image` - img-src
+ * `CspDirective::Font` - font-src
+ * `CspDirective::Script` - srcipt-src
+ * `CspDirective::Style` - style-src
  
 These can be of course be shortened with this
 ```

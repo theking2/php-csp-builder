@@ -1,5 +1,7 @@
 # PHP CspBuilder
-Ultimate Content-Security-Policy builder in PHP. The CspSource and CspDirective enum utilize the string backed enums to protect you project from typos. Garantued to work on all browsers. Add security to your PHP based site now.
+Ultimate Content-Security-Policy builder in PHP. The CspSource and CspDirective enum utilize the string backed enums to protect your project from typos. Garantued to work fir _all_ browsers. 
+
+Add security to your PHP based site now.
 
 # Interface
  * `public function addCspPolicy(CspDIrective $directive, CspSource $source): CspBuilder`
@@ -9,7 +11,7 @@ Ultimate Content-Security-Policy builder in PHP. The CspSource and CspDirective 
  * `public function getCspHeader(): string`
  * `public function setCspHeader(): void`
 
-Most function return $this therefore allowing for chaining.
+Most function return $this therefore allow for chaining.
 
 ## Sources
 The following source identifiers are included:

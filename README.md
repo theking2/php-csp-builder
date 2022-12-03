@@ -11,6 +11,31 @@ Simple Content-Security-Policy builder in PHP. Enums protect for typos, but are 
 
 Most function return $this therefore allowing for chaining.
 
+## Sources
+The following source identifiers are included:
+ * CspSource::Self - self
+ * CspSource::UnsafeIline - unsafe-inline
+ * CspSource::UnsafeEval - unsafe-eval
+ * CspSource::Data - data:
+ * CspSource::Blob - blob:
+ * CspSource::Media - media:
+ * CspSource::Frame - frame:
+ 
+"" Directives
+The following directives are defined
+ * CspDirective::Default - default-src
+ * CspDirective::Image - img-src
+ * CspDirective::Font - font-src
+ * CspDirective::Script - srcipt-src
+ * CspDirective::Style - style-src
+ 
+These can be shortened with for instance
+```
+use \CspDirective as CspD;
+use \CspSource as CspS;
+```
+
+
 ## addCspPolicies
 Deprecated, use one of the other add functions instead. Adds an array of policies to a directive, well overwrite existing policies. 
 

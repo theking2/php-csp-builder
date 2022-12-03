@@ -21,7 +21,7 @@ The following source identifiers are included:
  * CspSource::Media - media:
  * CspSource::Frame - frame:
  
-"" Directives
+## Directives
 The following directives are defined
  * CspDirective::Default - default-src
  * CspDirective::Image - img-src

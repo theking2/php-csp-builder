@@ -2,6 +2,15 @@
 Ultimate Content-Security-Policy builder in PHP. The CspSource and CspDirective enum utilize the string backed enums to protect your project from typos. Garantued to work fir _all_ browsers. 
 
 Add security to your PHP based site now.
+Install with
+```JS
+{
+    "require": {
+	"kingsoft/csp-builder":=
+    }
+}
+```
+In your `composer.json` file
 
 # Interface
  * `public function addCspPolicy(CspDIrective $directive, CspSource $source): CspBuilder`

@@ -6,7 +6,7 @@ Install with
 ```JS
 {
     "require": {
-	"kingsoft/csp-builder":=
+	"kingsoft/csp-builder":*
     }
 }
 ```
